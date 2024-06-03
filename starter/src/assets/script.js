@@ -47,12 +47,21 @@ const cart = [];
   - if the product is not already in the cart, add it to the cart
 */
 
-function addProductToCart(productID) {}
+function addProductToCart(productID) {
+  const product = products.find((p) => p.productId === productID);
+  if (product) {
+    if (cart.includes(product)) {
+      cart.push(product);
+    }
+    product.quantity;
+  }
+}
 
 /* Create a function named increaseQuantity that takes in the productId as an argument
   - increaseQuantity should get the correct product based on the productId
   - increaseQuantity should then increase the product's quantity
 */
+function increaseQuantity(productID) {}
 
 /* Create a function named decreaseQuantity that takes in the productId as an argument
   - decreaseQuantity should get the correct product based on the productId
