@@ -47,13 +47,13 @@ const cart = [];
   - if the product is not already in the cart, add it to the cart
 */
 
-function addProductToCart(productID) {
-  const product = products.find((p) => p.productId === productID);
+function addProductToCart(productId) {
+  const product = products.find((p) => p.productId === productId);
   if (product) {
-    if (cart.includes(product)) {
+    if (!cart.includes(product)) {
       cart.push(product);
     }
-    product.quantity;
+    product.quantity++;
   }
 }
 
@@ -61,19 +61,48 @@ function addProductToCart(productID) {
   - increaseQuantity should get the correct product based on the productId
   - increaseQuantity should then increase the product's quantity
 */
-function increaseQuantity(productID) {}
+function increaseQuantity(productId) {
+  const product = products.find((p) => p.productId === productId);
+  if (product) {
+    product.quantity++;
+  }
+}
 
 /* Create a function named decreaseQuantity that takes in the productId as an argument
   - decreaseQuantity should get the correct product based on the productId
   - decreaseQuantity should decrease the quantity of the product
   - if the function decreases the quantity to 0, the product is removed from the cart
 */
+function decreaseQuantity(productId) {
+  const product = products.find((p) => p.productId === productId);
+  if (product) {
+    product.quantity--;
+  }
+  if (product.quantity === 0) {
+    const index = cart.indexOf(product);
+    if (index > -1) {
+      cart.splice(index, 1);
+    }
+  }
+}
 
 /* Create a function named removeProductFromCart that takes in the productId as an argument
   - removeProductFromCart should get the correct product based on the productId
   - removeProductFromCart should update the product quantity to 0
   - removeProductFromCart should remove the product from the cart
 */
+function removeProductFromCart(productId) {
+  const product = products.find((p) => p.productId === productId);
+
+  if (product) {
+    product.quantity = 0;
+
+    const index = cart.indexOf(product);
+    if (index > -1) {
+      cart.splice(index, 1);
+    }
+  }
+}
 
 /* Create a function named cartTotal that has no parameters
   - cartTotal should iterate through the cart to get the total cost of all products
@@ -81,7 +110,19 @@ function increaseQuantity(productID) {}
   Hint: price and quantity can be used to determine total cost
 */
 
+function cartTotal() {
+  let total = 0;
+  for (let i = 0; i < cart.length; i++) {
+    total += cart[i].price * cart[i].quantity;
+  }
+  return total;
+}
+
 /* Create a function called emptyCart that empties the products from the cart */
+
+function emptyCart() {
+  cart.length = 0;
+}
 
 /* Create a function named pay that takes in an amount as an argument
   - amount is the money paid by customer
@@ -89,6 +130,16 @@ function increaseQuantity(productID) {}
   - pay will return a positive number if money should be returned to customer
   Hint: cartTotal function gives us cost of all the products in the cart  
 */
+
+let totalPaid = 0;
+
+function pay(amount) {
+  totalPaid += amount;
+  const totalCost = cartTotal();
+  const difference = totalPaid - totalCost;
+
+  return difference;
+}
 
 /* Place stand out suggestions here (stand out suggestions can be found at the bottom of the project rubric.)*/
 
